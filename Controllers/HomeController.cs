@@ -46,7 +46,7 @@ namespace Wall.Controllers
             return View ("Login");
         }
         [HttpPost("login")]
-        public IActionResult Login( User userSubmit){
+        public IActionResult Login(User userSubmit){
             if(ModelState.IsValid){
                 var UserInDb = dbContext.Users.FirstOrDefault(u => u.Email == userSubmit.Email);
                 if(UserInDb == null){

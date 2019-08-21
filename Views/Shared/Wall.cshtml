@@ -16,6 +16,9 @@
     <p> >> @message.MessageText</p>
     <p>@foreach(var comment in @Model.allComments.Where(mes=>mes.MessageId == @message.MessageId).OrderByDescending(t=>t.CreatedAt)){
         <p> Comment: --> @comment.CommentText </p>
+        @if(comment.UserId == @Model.user.UserId){
+            <a href="delete/@comment.CommentId"><button>Delete Comment</button></a>
+        }
     }
     </p>
 <form asp-action="AddComment" method="post" asp-route-id="@message.MessageId" asp-controller="Wall">

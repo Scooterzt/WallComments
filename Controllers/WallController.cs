@@ -45,5 +45,12 @@ namespace Wall.Controllers{
             dbContext.SaveChanges();
             return RedirectToAction("DisplayWall", "Wall");
         }
+        [HttpGet("delete/{id}")]
+        public IActionResult Delete(int id){
+            Comment delComment = dbContext.Comments.FirstOrDefault(c=>c.CommentId == id);
+            dbContext.Comments.Remove(delComment);
+            dbContext.SaveChanges();
+            return RedirectToAction ("DisplayWall", "Wall");
+        }
     }
 }
