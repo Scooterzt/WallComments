@@ -1,0 +1,29 @@
+@model Wrapper
+<h1>Coding Dojo wall</h1>
+<h4>Welcome @Model.user.FirstName</h4>
+<a href="logout">Log Out!</a>
+
+<form asp-action="CreatedMessage" method="post" asp-route-id="@Model.user.UserId" asp-controller="Wall">
+    <div class="form-group">
+        <label asp-for="message.MessageText">Post a Message: </label>
+        <textarea asp-for="message.MessageText" class="form-control" placeholder="Message"> </textarea><br>
+        <button type="submit" class="btn btn-primary">Add New Message</button>
+</div>
+</form>
+
+@foreach (var message in @Model.allMessages.OrderByDescending(t=>t.CreatedAt)){
+    <p><b>@Model.user.FirstName - @message.CreatedAt</b></p>
+    <p> >> @message.MessageText</p>
+    <p>@foreach(var comment in @Model.allComments.Where(mes=>mes.MessageId == @message.MessageId).OrderByDescending(t=>t.CreatedAt)){
+        <p> Comment: --> @comment.CommentText </p>
+    }
+    </p>
+<form asp-action="AddComment" method="post" asp-route-id="@message.MessageId" asp-controller="Wall">
+    <div class="form-group">
+        <label asp-for="comment.CommentText">Post a Message: </label>
+        <textarea asp-for="comment.CommentText" class="form-control" placeholder="comment..."> </textarea><br>
+        <button type="submit" class="btn btn-primary">Add New Comment</button>
+    </div>
+</form>
+}
+
